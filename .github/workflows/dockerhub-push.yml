@@ -86,3 +86,4 @@ jobs:
          username: ${{ secrets.DOCKER_USERNAME }}
          password: ${{ secrets.DOCKER_PASSWORD }}
          repository: amirulandalib/mltb-alpine-docker
+         short-description: ${{ github.event.repository.description }}
