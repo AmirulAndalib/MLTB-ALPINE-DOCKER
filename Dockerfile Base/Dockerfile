@@ -64,5 +64,3 @@ RUN echo -e "\e[32m[INFO]: Running Final Apk Update.\e[0m" && \
 ENV LANG="en_US.UTF-8" LANGUAGE="en_US:en" LC_ALL="en_US.UTF-8"
 
 SHELL ["/bin/bash", "-c"]
-
-COPY . .
