@@ -20,10 +20,11 @@ RUN chmod 777 /usr/src/app && chmod +x /usr/src/app
 RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     apk update && apk upgrade && \
     apk add --upgrade --no-cache \
-    sudo py3-wheel musl-dev musl qbittorrent python3 python3-dev busybox \
+    sudo py3-wheel musl-dev musl qbittorrent python3 python3-dev busybox musl-locales \
     qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg musl-locales \
     neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
-    alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full
+    alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs npm \
+    && npm install -g localtunnel
 
 
 # Installing MegaSdkC++ Build Tools
@@ -50,6 +51,15 @@ RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
     && cd bindings/python/ && python3 setup.py bdist_wheel \
     && cd dist && ls && pip3 install --no-cache-dir *.whl  
 
+
+RUN echo -e "\e[32m[INFO]: Installing GLIBC.\e[0m" && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-bin-2.35-r0.apk && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-i18n-2.35-r0.apk && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-dev-2.35-r0.apk && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-2.35-r0.apk && \
+    apk add glibc-bin-2.35-r0.apk glibc-i18n-2.35-r0.apk glibc-dev-2.35-r0.apk glibc-2.35-r0.apk
+
+
 # Running Final Apk Update
 
 RUN echo -e "\e[32m[INFO]: Running Final Apk Update.\e[0m" && \
@@ -58,5 +68,8 @@ RUN echo -e "\e[32m[INFO]: Running Final Apk Update.\e[0m" && \
 
 # Setup Language Environments
 ENV LANG="en_US.UTF-8" LANGUAGE="en_US:en" LC_ALL="en_US.UTF-8"
+
+RUN echo -e "\e[32m[INFO]: Generating GLIBC EN Locales.\e[0m" && \
+    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
 
 SHELL ["/bin/bash", "-c"]
