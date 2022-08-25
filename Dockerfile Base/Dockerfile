@@ -21,7 +21,7 @@ RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     apk update && apk upgrade && \
     apk add --upgrade --no-cache \
     sudo py3-wheel musl-dev musl qbittorrent python3 python3-dev busybox musl-locales \
-    qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg musl-locales \
+    qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg musl-locales parallel \
     neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
     alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs npm \
     && npm install -g localtunnel
@@ -53,6 +53,7 @@ RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
 
 
 RUN echo -e "\e[32m[INFO]: Installing GLIBC.\e[0m" && \
+    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-bin-2.35-r0.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-i18n-2.35-r0.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-dev-2.35-r0.apk && \
