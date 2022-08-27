@@ -23,7 +23,7 @@ RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     sudo py3-wheel musl-dev musl qbittorrent python3 python3-dev busybox musl-locales \
     qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg musl-locales parallel \
     neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
-    alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs npm \
+    alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs coreutils npm \
     && npm install -g localtunnel
 
 
