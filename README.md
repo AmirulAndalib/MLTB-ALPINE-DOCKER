@@ -60,5 +60,4 @@ CMD ["bash", "start.sh"]
 
 ## For support contact on issues or on discussions or [here](https://t.me/kangershub)
 
-
-
+## 🐛 For Tracking Bugs please [go here](https://github.com/AmirulAndalib/MLTB-ALPINE-DOCKER/issues/7)
