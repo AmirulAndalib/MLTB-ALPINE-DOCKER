@@ -25,8 +25,17 @@ RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
     alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs coreutils npm \
     && npm install -g localtunnel kill-port && \
-    wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && \
-    sudo dpkg -i --force-architecture cloudflared-linux-amd64.deb
+    curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(cpu=$(uname -m).deb; \
+    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
+    elif [[ "$cpu" == "x86" ]]; then echo "i386"; \
+    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; \
+    else echo $cpu; fi) && \
+    sudo dpkg -i --force-architecture cloudflared-linux-$(cpu=$(uname -m).deb \
+    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
+    elif [[ "$cpu" == "x86" ]]; then echo "i386"; \
+    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; \
+    else echo $cpu; fi)
+
 
 
 # Installing MegaSdkC++ Build Tools
@@ -61,6 +70,7 @@ RUN echo -e "\e[32m[INFO]: Installing GLIBC.\e[0m" && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-dev-2.35-r0.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-2.35-r0.apk && \
     apk add glibc-bin-2.35-r0.apk glibc-i18n-2.35-r0.apk glibc-dev-2.35-r0.apk glibc-2.35-r0.apk
+    rm -rf *.apk *.deb
 
 
 # Running Final Apk Update
