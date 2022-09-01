@@ -17,6 +17,8 @@ RUN chmod 777 /usr/src/app && chmod +x /usr/src/app
 
 # Installing basic packages
 
+RUN uname -m
+
 RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     apk update && apk upgrade && \
     apk add --upgrade --no-cache \
