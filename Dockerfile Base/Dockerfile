@@ -24,7 +24,9 @@ RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg musl-locales parallel \
     neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
     alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs coreutils npm \
-    && npm install -g localtunnel kill-port
+    && npm install -g localtunnel kill-port && \
+    wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && \
+    sudo dpkg -i --force-architecture cloudflared-linux-amd64.deb
 
 
 # Installing MegaSdkC++ Build Tools
