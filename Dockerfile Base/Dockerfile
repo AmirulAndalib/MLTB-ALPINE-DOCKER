@@ -29,8 +29,7 @@ RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     && npm install -g localtunnel kill-port
 
 
-
-# Installing MegaSdkC++ Build Tools
+# Installing Build Tools
 
 RUN echo -e "\e[32m[INFO]: Installing MegaSdkC++ Building tools.\e[0m" && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
@@ -38,18 +37,20 @@ RUN echo -e "\e[32m[INFO]: Installing MegaSdkC++ Building tools.\e[0m" && \
     sudo apk add --upgrade --no-cache \
     libtool curl-dev libsodium-dev c-ares-dev sqlite-dev freeimage-dev swig boost-dev \
     libpthread-stubs zlib-dev libpq-dev clang clang-dev ccache gettext gettext-dev \
-    gawk crypto++ crypto++-dev && \
-    curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(cpu=$(uname -m).deb; \
-    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
-    elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; \
-    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; \
-    else echo $cpu; fi) && \
-    sudo dpkg -i --force-architecture cloudflared-linux-$(cpu=$(uname -m).deb \
-    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
-    elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; \
-    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; \
-    else echo $cpu; fi)
+    gawk crypto++ crypto++-dev
 
+
+# Install Cloudflared Tunnel
+
+RUN echo -e "\e[32m[INFO]: Installing Cloudflareed Tunnel.\e[0m" && \
+    curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(cpu=$(uname -m).deb; if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; else echo $cpu; fi) && \
+    sudo dpkg -i --force-architecture cloudflared-linux-$(cpu=$(uname -m).deb if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; else echo $cpu; fi)
+
+
+curl -L https://github.com/anasty17/megasdkrest/releases/download/latest/megasdkrest-$(cpu=$(uname -m);\
+    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
+    elif [[ "$cpu" == "x86" ]]; then echo "i386"; \
+    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; else echo $cpu; fi) \
 
 # Building and Installing MegaSdkC++
 
