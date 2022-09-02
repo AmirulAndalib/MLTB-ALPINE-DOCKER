@@ -22,7 +22,7 @@ RUN uname -m
 RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     apk update && apk upgrade && \
     apk add --upgrade --no-cache \
-    sudo py3-wheel musl-dev musl qbittorrent python3 python3-dev busybox musl-locales \
+    sudo py3-wheel musl-dev musl python3 python3-dev busybox musl-locales \
     qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg musl-locales parallel \
     neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
     alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs coreutils npm \
@@ -44,13 +44,8 @@ RUN echo -e "\e[32m[INFO]: Installing MegaSdkC++ Building tools.\e[0m" && \
 
 RUN echo -e "\e[32m[INFO]: Installing Cloudflareed Tunnel.\e[0m" && \
     curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(cpu=$(uname -m).deb;\
-    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
-    elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; \
-    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; else echo $cpu; fi) && \
-    sudo dpkg -i --force-architecture cloudflared-linux-$(cpu=$(uname -m).deb \
-    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
-    elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; \
-    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; else echo $cpu; fi)
+    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; elif [[ "$cpu" == "armv7l" ]]; \
+    then echo "arm"; elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; else echo $cpu; fi)
 
 
 # Building and Installing MegaSdkC++
