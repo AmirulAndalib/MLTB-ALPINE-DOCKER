@@ -46,12 +46,6 @@ RUN echo -e "\e[32m[INFO]: Installing Cloudflareed Tunnel.\e[0m" && \
     curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(cpu=$(uname -m).deb; if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; else echo $cpu; fi) && \
     sudo dpkg -i --force-architecture cloudflared-linux-$(cpu=$(uname -m).deb if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; else echo $cpu; fi)
 
-
-curl -L https://github.com/anasty17/megasdkrest/releases/download/latest/megasdkrest-$(cpu=$(uname -m);\
-    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
-    elif [[ "$cpu" == "x86" ]]; then echo "i386"; \
-    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; else echo $cpu; fi) \
-
 # Building and Installing MegaSdkC++
 
 ENV PYTHONWARNINGS=ignore
