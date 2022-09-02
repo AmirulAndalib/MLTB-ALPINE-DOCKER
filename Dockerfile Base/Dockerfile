@@ -44,10 +44,7 @@ RUN echo -e "\e[32m[INFO]: Installing Building tools.\e[0m" && \
 
 RUN echo -e "\e[32m[INFO]: Installing Cloudflared Tunnel.\e[0m" && \
     curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(cpu=$(uname -m).deb;\
-    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; elif [[ "$cpu" == "aarch64" ]]; then echo "aarch64"; else echo $cpu; fi) && \
-    sudo dpkg -i --force-architecture cloudflared-linux-$(cpu=$(uname -m).deb\
     if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; elif [[ "$cpu" == "aarch64" ]]; then echo "aarch64"; else echo $cpu; fi)
-    
 
 
 # Building and Installing MegaSdkC++
