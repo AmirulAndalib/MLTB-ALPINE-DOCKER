@@ -38,7 +38,17 @@ RUN echo -e "\e[32m[INFO]: Installing MegaSdkC++ Building tools.\e[0m" && \
     sudo apk add --upgrade --no-cache \
     libtool curl-dev libsodium-dev c-ares-dev sqlite-dev freeimage-dev swig boost-dev \
     libpthread-stubs zlib-dev libpq-dev clang clang-dev ccache gettext gettext-dev \
-    gawk crypto++ crypto++-dev
+    gawk crypto++ crypto++-dev && \
+    curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(cpu=$(uname -m).deb; \
+    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
+    elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; \
+    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; \
+    else echo $cpu; fi) && \
+    sudo dpkg -i --force-architecture cloudflared-linux-$(cpu=$(uname -m).deb \
+    if [[ "$cpu" == "x86_64" ]]; then echo "amd64"; \
+    elif [[ "$cpu" == "armv7l" ]]; then echo "arm"; \
+    elif [[ "$cpu" == "aarch64" ]]; then echo "arm64"; \
+    else echo $cpu; fi)
 
 
 # Building and Installing MegaSdkC++
