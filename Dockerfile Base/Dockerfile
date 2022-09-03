@@ -17,16 +17,18 @@ RUN chmod 777 /usr/src/app && chmod +x /usr/src/app
 
 # Installing basic packages
 
-RUN uname -m
-
 RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     apk update && apk upgrade && \
     apk add --upgrade --no-cache \
     sudo py3-wheel musl-dev musl python3 python3-dev busybox musl-locales \
     qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg musl-locales parallel \
     neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
-    alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs coreutils npm \
-    && npm install -g localtunnel kill-port
+    alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs coreutils npm bash-completion bash-doc \
+    && npm install -g localtunnel kill-port && \
+    sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
+
+
+SHELL ["/bin/bash", "-c"]
 
 
 # Installing Build Tools
@@ -40,17 +42,18 @@ RUN echo -e "\e[32m[INFO]: Installing Building tools.\e[0m" && \
     gawk crypto++ crypto++-dev
 
 
+
+
 # Install Cloudflared Tunnel
 
 RUN echo -e "\e[32m[INFO]: Installing Cloudflared Tunnel.\e[0m" && \
-    bash if ${TARGETPLATFORM} in \
-         "linux/amd64")  ARCH=amd64  ;; \
-         "linux/arm64")  ARCH=arm64  ;; \
-         "linux/arm/v7") ARCH=arm    ;; \
-         fi \
+    if ${TARGETPLATFORM} in \
+       "linux/amd64")  ARCH=amd64  ;; \
+       "linux/arm64")  ARCH=arm64  ;; \
+       "linux/arm/v7") ARCH=arm    ;; \
+    fi \
     && wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${ARCH}.deb -O cloudflared-linux-${ARCH}.deb \
     && sudo dpkg -i--force-architecture cloudflared-linux-${ARCH}.deb
-
 
 # Building and Installing MegaSdkC++
 
