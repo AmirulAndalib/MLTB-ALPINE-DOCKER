@@ -48,7 +48,7 @@ RUN echo -e "\e[32m[INFO]: Installing Cloudflared Tunnel.\e[0m" && \
          "linux/arm64")  ARCH=arm64  ;; \
          "linux/arm/v7") ARCH=arm  ;; \
     fi \
-    && wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${ARCH}.deb -O cloudflared-linux-${ARCH}.deb
+    && wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${ARCH}.deb -O cloudflared-linux-${ARCH}.deb \
     && sudo dpkg -i--force-architecture cloudflared-linux-${ARCH}.deb
 
 
