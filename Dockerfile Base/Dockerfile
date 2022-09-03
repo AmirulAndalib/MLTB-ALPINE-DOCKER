@@ -46,14 +46,18 @@ RUN echo -e "\e[32m[INFO]: Installing Building tools.\e[0m" && \
 
 # Install Cloudflared Tunnel
 
-RUN if ${TARGETPLATFORM} in \
-       "linux/amd64")  ARCH=amd64  ;; \
-       "linux/arm64")  ARCH=arm64  ;; \
-       "linux/arm/v7") ARCH=arm    ;; \
-    fi \
-    && wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${ARCH}.deb -O cloudflared-linux-${ARCH}.deb \
-    && sudo dpkg -i--force-architecture cloudflared-linux-${ARCH}.deb
-         
+
+RUN case ${TARGETPLATFORM} in \
+         "linux/amd64")  TINI_ARCH=amd64  ;; \
+         "linux/arm64")  TINI_ARCH=arm64  ;; \
+         "linux/arm/v7") TINI_ARCH=armhf  ;; \
+         "linux/arm/v6") TINI_ARCH=armel  ;; \
+         "linux/386")    TINI_ARCH=i386   ;; \
+    esac \
+ && wget -q https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-${TINI_ARCH} -O /tini \
+ && chmod +x /tini
+
+
 # Building and Installing MegaSdkC++
 
 ENV PYTHONWARNINGS=ignore
