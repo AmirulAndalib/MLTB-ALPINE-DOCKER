@@ -8,7 +8,7 @@
 ---
 ### Dockerfile Operating System 💽 >> Alpine Linux Edge 
 
-### Supported Architectures ✅  >> Amd64 | ArmV8 | ArmV7 | Arm64 |  PPC64le | S390X
+### Supported Architectures ✅  >> Amd64 | ArmV8 | ArmV7 | Arm64
 
 ### MegaSdk Repository which was used in this Dockerfile : [MegaSdkC++](https://github.com/meganz/sdk)
 ---
@@ -60,5 +60,4 @@ CMD ["bash", "start.sh"]
 
 ## For support contact on issues or on discussions or [here](https://t.me/kangershub)
 
-
-
+## 🐛 For Tracking Bugs please [go here](https://github.com/AmirulAndalib/MLTB-ALPINE-DOCKER/issues/7)

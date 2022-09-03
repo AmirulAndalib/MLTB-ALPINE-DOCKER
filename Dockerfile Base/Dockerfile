@@ -20,22 +20,41 @@ RUN chmod 777 /usr/src/app && chmod +x /usr/src/app
 RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     apk update && apk upgrade && \
     apk add --upgrade --no-cache \
-    sudo py3-wheel musl-dev musl qbittorrent python3 python3-dev busybox musl-locales \
+    sudo py3-wheel musl-dev musl python3 python3-dev busybox musl-locales \
     qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg musl-locales parallel \
     neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
-    alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs npm \
-    && npm install -g localtunnel
+    alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs coreutils npm bash-completion bash-doc \
+    && npm install -g localtunnel kill-port && \
+    sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
 
 
-# Installing MegaSdkC++ Build Tools
+SHELL ["/bin/bash", "-c"]
 
-RUN echo -e "\e[32m[INFO]: Installing MegaSdkC++ Building tools.\e[0m" && \
+
+# Installing Build Tools
+
+RUN echo -e "\e[32m[INFO]: Installing Building tools.\e[0m" && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     sudo apk add --upgrade --no-cache \
     libtool curl-dev libsodium-dev c-ares-dev sqlite-dev freeimage-dev swig boost-dev \
     libpthread-stubs zlib-dev libpq-dev clang clang-dev ccache gettext gettext-dev \
     gawk crypto++ crypto++-dev
+
+
+
+
+# Install Cloudflared Tunnel
+
+RUN echo -e "\e[32m[INFO]: Installing Cloudflared Tunnel.\e[0m" && \
+    case ${TARGETPLATFORM} in \
+         "linux/amd64")  ARCH=amd64  ;; \
+         "linux/arm64")  ARCH=arm64  ;; \
+         "linux/arm/v7") ARCH=arm    ;; \
+    esac \
+    && wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${ARCH}.deb -O cloudflared-linux-${ARCH}.deb \
+    && sudo dpkg -i --force-architecture cloudflared-linux-${ARCH}.deb
+
 
 
 # Building and Installing MegaSdkC++
@@ -58,7 +77,8 @@ RUN echo -e "\e[32m[INFO]: Installing GLIBC.\e[0m" && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-i18n-2.35-r0.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-dev-2.35-r0.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-2.35-r0.apk && \
-    apk add glibc-bin-2.35-r0.apk glibc-i18n-2.35-r0.apk glibc-dev-2.35-r0.apk glibc-2.35-r0.apk
+    apk add glibc-bin-2.35-r0.apk glibc-i18n-2.35-r0.apk glibc-dev-2.35-r0.apk glibc-2.35-r0.apk && \
+    rm -rf *.apk *.deb
 
 
 # Running Final Apk Update

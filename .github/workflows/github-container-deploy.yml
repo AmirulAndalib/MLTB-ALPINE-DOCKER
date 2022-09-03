@@ -74,6 +74,6 @@ jobs:
 
           push: true
 
-          platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/arm/v7
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
 
           tags: ghcr.io/amirulandalib/mltb-alpine-docker:latest
