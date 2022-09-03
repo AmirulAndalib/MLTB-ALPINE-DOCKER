@@ -54,7 +54,7 @@ RUN case ${TARGETPLATFORM} in \
          "linux/arm/v6") TINI_ARCH=armel  ;; \
          "linux/386")    TINI_ARCH=i386   ;; \
     esac \
- && wget -q https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-${TINI_ARCH} -O /tini \
+ && wget -q https://github.com/krallin/tini/releases/download/latest/tini-static-${TINI_ARCH} -O /tini \
  && chmod +x /tini
 
 
