@@ -61,8 +61,7 @@ RUN echo -e "\e[32m[INFO]: Installing GLIBC.\e[0m" && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-bin-2.35-r0.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-i18n-2.35-r0.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-dev-2.35-r0.apk && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-2.35-r0.apk && \
-    apk add glibc-bin-2.35-r0.apk glibc-i18n-2.35-r0.apk glibc-dev-2.35-r0.apk glibc-2.35-r0.apk && \
+    apk add glibc-bin-2.35-r0.apk glibc-i18n-2.35-r0.apk glibc-dev-2.35-r0.apk && \
     rm -rf *.apk *.deb
 
 
