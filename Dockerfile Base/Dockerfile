@@ -21,11 +21,16 @@ ENV TZ=Asia/Dhaka
 RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     apk update && apk upgrade && \
     apk add --upgrade --no-cache \
-    sudo py3-wheel musl-dev musl python3 python3-dev busybox musl-locales github-cli lshw \
-    qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg parallel \
-    neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
-    musl-utils tzdata gcompat 
-    alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs coreutils npm bash-completion bash-doc \
+    sudo py3-wheel musl-dev musl python3 \
+    python3-dev busybox musl-locales github-cli lshw \
+    qbittorrent-nox py3-pip py3-lxml aria2 p7zip \
+    xz curl pv jq ffmpeg parallel \
+    neofetch git make g++ gcc automake zip unzip \
+    autoconf speedtest-cli mediainfo bash \
+    musl-utils tzdata gcompat \
+    alpine-sdk libffi-dev py3-virtualenv libffi \
+    dpkg cmake icu-data-full \
+    nodejs coreutils npm bash-completion bash-doc \
     && npm install -g localtunnel kill-port && \
     sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
 
