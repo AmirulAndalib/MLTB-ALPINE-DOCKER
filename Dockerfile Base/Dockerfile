@@ -13,6 +13,7 @@ ARG TARGETPLATFORM BUILDPLATFORM
 
 WORKDIR /usr/src/app
 RUN chmod 777 /usr/src/app && chmod +x /usr/src/app
+ENV TZ=Asia/Dhaka
 
 
 # Installing basic packages
@@ -21,12 +22,12 @@ RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     apk update && apk upgrade && \
     apk add --upgrade --no-cache \
     sudo py3-wheel musl-dev musl python3 python3-dev busybox musl-locales github-cli lshw \
-    qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg musl-locales parallel \
+    qbittorrent-nox py3-pip py3-lxml aria2 p7zip xz curl pv jq ffmpeg parallel \
     neofetch git make g++ gcc automake zip unzip autoconf speedtest-cli mediainfo bash \
+    musl-utils tzdata gcompat 
     alpine-sdk libffi-dev py3-virtualenv libffi dpkg cmake icu-data-full nodejs coreutils npm bash-completion bash-doc \
     && npm install -g localtunnel kill-port && \
     sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
-
 
 SHELL ["/bin/bash", "-c"]
 
@@ -56,25 +57,18 @@ RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
     && cd dist && ls && pip3 install --no-cache-dir *.whl  
 
 
-RUN echo -e "\e[32m[INFO]: Installing GLIBC.\e[0m" && \
-    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-bin-2.35-r0.apk && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-i18n-2.35-r0.apk && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r0/glibc-dev-2.35-r0.apk && \
-    apk add glibc-bin-2.35-r0.apk glibc-i18n-2.35-r0.apk glibc-dev-2.35-r0.apk && \
-    rm -rf *.apk *.deb
-
-
 # Running Final Apk Update
 
 RUN echo -e "\e[32m[INFO]: Running Final Apk Update.\e[0m" && \
     sudo apk update && apk upgrade
+    rm -rf *.apk *.deb
 
 
 # Setup Language Environments
 ENV LANG="en_US.UTF-8" LANGUAGE="en_US:en" LC_ALL="en_US.UTF-8"
+RUN echo 'export LC_ALL=en_US.UTF-8' >> /etc/profile.d/locale.sh && \
+    sed -i 's|LANG=C.UTF-8|LANG=en_US.UTF-8|' /etc/profile.d/locale.sh && \
+    RUN cp /usr/share/zoneinfo/Asia/Dhaka /etc/localtime
 
-RUN echo -e "\e[32m[INFO]: Generating GLIBC EN Locales.\e[0m" && \
-    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
 
 SHELL ["/bin/bash", "-c"]
