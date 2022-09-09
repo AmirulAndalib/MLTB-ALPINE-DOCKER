@@ -13,7 +13,7 @@ ARG TARGETPLATFORM BUILDPLATFORM
 
 WORKDIR /usr/src/app
 RUN chmod 777 /usr/src/app && chmod +x /usr/src/app
-ENV TZ=Asia/Dhaka
+ENV TZ Asia/Dhaka
 
 
 # Installing basic packages
@@ -65,7 +65,7 @@ RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
 # Running Final Apk Update
 
 RUN echo -e "\e[32m[INFO]: Running Final Apk Update.\e[0m" && \
-    sudo apk update && apk upgrade
+    sudo apk update && apk upgrade && \
     rm -rf *.apk *.deb
 
 
