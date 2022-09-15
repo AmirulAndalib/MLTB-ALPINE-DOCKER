@@ -28,8 +28,8 @@ RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     neofetch git make g++ gcc automake zip unzip \
     autoconf speedtest-cli mediainfo bash \
     musl-utils tzdata gcompat \
-    alpine-sdk libffi-dev py3-virtualenv libffi \
-    dpkg cmake icu-data-full \
+    libffi-dev py3-virtualenv libffi \
+    dpkg cmake icu-data-full apk-tools \
     nodejs coreutils npm bash-completion bash-doc \
     && npm install -g localtunnel kill-port && \
     sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
