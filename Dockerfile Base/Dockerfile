@@ -27,7 +27,7 @@ RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
     xz curl pv jq ffmpeg parallel \
     neofetch git make g++ gcc automake zip unzip \
     autoconf speedtest-cli mediainfo bash \
-    musl-utils tzdata gcompat \
+    musl-utils tzdata gcompat libmagic \
     libffi-dev py3-virtualenv libffi \
     dpkg cmake icu-data-full apk-tools \
     nodejs coreutils npm bash-completion bash-doc \
