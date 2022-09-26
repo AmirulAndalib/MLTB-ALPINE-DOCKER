@@ -12,7 +12,10 @@ ARG TARGETPLATFORM BUILDPLATFORM
 # Setup Working Directory
 
 WORKDIR /usr/src/app
-RUN chmod 777 /usr/src/app && chmod +x /usr/src/app
+RUN chmod 777 /usr/src/app && \
+    chmod +x /usr/src/app && \
+    chmod 705 /usr/src/app
+
 ENV TZ Asia/Dhaka
 
 
@@ -55,30 +58,32 @@ RUN echo -e "\e[32m[INFO]: Installing Cloudflared Tunnel.\e[0m" && \
          "linux/amd64")  ARCH=amd64  ;; \
          "linux/arm64")  ARCH=arm64  ;; \
          "linux/arm/v7") ARCH=arm    ;; \
-    esac \
-    && wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${ARCH}.deb -O cloudflared-linux-${ARCH}.deb \
-    && sudo dpkg -i --force-architecture cloudflared-linux-${ARCH}.deb
+    esac && \
+    wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${ARCH}.deb -O cloudflared-linux-${ARCH}.deb && \
+    sudo dpkg -i --force-architecture cloudflared-linux-${ARCH}.deb
 
 
 # Building and Installing MegaSdkC++
 
 ENV PYTHONWARNINGS=ignore
 RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
-    git clone https://github.com/meganz/sdk.git ~/home/sdk \
-    && cd ~/home/sdk && rm -rf .git \
-    && autoupdate -fIv && ./autogen.sh \
-    && ./configure CFLAGS='-fpermissive' CXXFLAGS='-fpermissive' CPPFLAGS='-fpermissive' CCFLAGS='-fpermissive' \
-    --disable-silent-rules --enable-python --with-sodium --disable-examples --with-python3 \
-    && make -j$(nproc --all) \
-    && cd bindings/python/ && python3 setup.py bdist_wheel \
-    && cd dist && ls && pip3 install --no-cache-dir *.whl  
+    git clone https://github.com/meganz/sdk.git ~/home/sdk && \
+    cd ~/home/sdk && rm -rf .git && \
+    autoupdate -fIv && ./autogen.sh && \
+    ./configure CFLAGS='-fpermissive' CXXFLAGS='-fpermissive' CPPFLAGS='-fpermissive' CCFLAGS='-fpermissive' \
+    --disable-silent-rules --enable-python --with-sodium --disable-examples --with-python3 && \
+    make -j$(nproc --all) && \
+    cd bindings/python/ && \
+    python3 setup.py bdist_wheel && \
+    cd dist && ls && \
+    pip3 install --no-cache-dir *.whl  
 
 
 # Running Final Apk Update
 
 RUN echo -e "\e[32m[INFO]: Running Final Apk Update.\e[0m" && \
     sudo apk update && apk upgrade && \
-    rm -rf *.apk *.deb
+    rm -rf *
 
 
 # Setup Language Environments
