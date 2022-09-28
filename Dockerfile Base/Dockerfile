@@ -12,9 +12,9 @@ ARG TARGETPLATFORM BUILDPLATFORM
 # Setup Working Directory
 
 WORKDIR /usr/src/app
-RUN chmod 777 /usr/src/app && \
-    chmod +x /usr/src/app && \
-    chmod 705 /usr/src/app
+RUN chmod -R 777 /usr/src/app && \
+    chmod -R +x /usr/src/app && \
+    chmod -R 705 /usr/src/app
 
 ENV TZ Asia/Dhaka
 
