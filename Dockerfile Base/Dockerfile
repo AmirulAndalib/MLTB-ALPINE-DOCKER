@@ -82,15 +82,15 @@ RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
 # Running Final Apk Update
 
 RUN echo -e "\e[32m[INFO]: Running Final Apk Update.\e[0m" && \
-    sudo apk update && apk upgrade && \
-    rm -rf *
+    sudo apk update && apk upgrade
 
 
 # Setup Language Environments
 ENV LANG="en_US.UTF-8" LANGUAGE="en_US:en" LC_ALL="en_US.UTF-8"
 RUN echo 'export LC_ALL=en_US.UTF-8' >> /etc/profile.d/locale.sh && \
     sed -i 's|LANG=C.UTF-8|LANG=en_US.UTF-8|' /etc/profile.d/locale.sh && \
-    cp /usr/share/zoneinfo/Asia/Dhaka /etc/localtime
+    cp /usr/share/zoneinfo/Asia/Dhaka /etc/localtime && \
+    rm -rf *
 
 
 SHELL ["/bin/bash", "-c"]
