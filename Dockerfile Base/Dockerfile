@@ -75,9 +75,12 @@ RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
     make -j$(nproc --all) && \
     cd bindings/python/ && \
     python3 setup.py bdist_wheel && \
-    cd dist && ls && \
-    pip3 install --no-cache-dir *.whl  
+    cd dist && ls
 
+RUN echo -e "\e[32m[INFO]: Caching Pip Requirements.\e[0m" && \  
+    pip3 install *.whl && \
+    wget https://raw.githubusercontent.com/anasty17/mirror-leech-telegram-bot/master/requirements.txt -O requirements.txt && \
+    pip3 install -U -r requirements.txt
 
 # Running Final Apk Update
 
