@@ -47,8 +47,8 @@ RUN echo -e "\e[32m[INFO]: Installing Building tools.\e[0m" && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     sudo apk add --upgrade --no-cache \
     libtool curl-dev libsodium-dev c-ares-dev sqlite-dev freeimage-dev swig boost-dev \
-    libpthread-stubs zlib-dev libpq-dev clang clang-dev ccache gettext gettext-dev \
-    gawk crypto++ crypto++-dev
+    libpthread-stubs zlib zlib-dev libpq-dev clang clang-dev ccache gettext gettext-dev \
+    gawk crypto++ crypto++-dev libjpeg-turbo-dev 
 
 
 # Install Cloudflared Tunnel
@@ -76,8 +76,11 @@ RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
     cd bindings/python/ && \
     python3 setup.py bdist_wheel && \
     cd dist && ls && \
-    pip3 install --no-cache-dir *.whl  
+    pip3 install *.whl
 
+RUN echo -e "\e[32m[INFO]: Caching Pip Requirements.\e[0m" && \  
+    wget https://raw.githubusercontent.com/anasty17/mirror-leech-telegram-bot/master/requirements.txt -O requirements.txt && \
+    pip3 install -U -r requirements.txt
 
 # Running Final Apk Update
 

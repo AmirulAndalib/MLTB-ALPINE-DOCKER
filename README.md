@@ -33,11 +33,11 @@ FROM ghcr.io/amirulandalib/mltb-alpine-docker:latest
 
 COPY . .
 
-WORKDIR /usr/src/app
+# WORKDIR /usr/src/app
 
-RUN chmod 777 /usr/src/app
+# RUN chmod 777 /usr/src/app
 
-RUN pip3 install --no-cache-dir -r requirements.txt
+# RUN pip3 install --no-cache-dir -r requirements.txt
 
 CMD ["bash", "start.sh"]
 ```
@@ -56,6 +56,13 @@ CMD ["bash", "start.sh"]
  ✓ All pkg repos are also available in variety like Ubuntu so no shortage of dependencies here..
 
 ---
+
+## 📑 Changelogs
+
+    ✓ Cached PIP Requirements directly from Anasty17/mltb to docker image.
+    ✓ Cloudflared Tunnel (Argo Tunnel).
+    ✓ Local Tunnel (npm).
+    ✓ kill port (npm).
 
 
 ## For support contact on issues or on discussions or [here](https://t.me/kangershub)
