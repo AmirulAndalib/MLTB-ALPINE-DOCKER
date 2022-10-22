@@ -3,7 +3,7 @@ FROM alpine:edge
 
 # LABEL
 
-LABEL org.opencontainers.image.source="https://github.com/amirulandalib/mltb-alpine"
+LABEL org.opencontainers.image.source="https://github.com/amirulandalib/mltb-alpine-docker"
 LABEL org.opencontainers.image.description="Docker for MLTB by Anasty based on Alpine EDGE docker image"
 
 
@@ -51,7 +51,7 @@ RUN echo -e "\e[32m[INFO]: Installing Building tools.\e[0m" && \
     gawk crypto++ crypto++-dev libjpeg-turbo-dev 
 
 
-# Install Cloudflared Tunnel
+# Installing Cloudflared Tunnel
 
 RUN echo -e "\e[32m[INFO]: Installing Cloudflared Tunnel.\e[0m" && \
     case ${TARGETPLATFORM} in \
@@ -77,6 +77,9 @@ RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
     python3 setup.py bdist_wheel && \
     cd dist && ls && \
     pip3 install *.whl
+
+
+# Caching Pip Requirements
 
 RUN echo -e "\e[32m[INFO]: Caching Pip Requirements.\e[0m" && \  
     wget https://raw.githubusercontent.com/anasty17/mirror-leech-telegram-bot/master/requirements.txt -O requirements.txt && \
